@@ -40,13 +40,14 @@ class Display:
         except RuntimeError:
             pass
 
-    def set_finish_function(self, fn):
+    def set_finish_function(self, fn, *args):
         self.finish_fn = fn
+        self.finish_fn_args = args
 
     def destroy(self):
         print('destroy')
         self.stop.set()
         if self.finish_fn is not None:
-            self.finish_fn()
+            self.finish_fn(*self.finish_fn_args)
         self.tk.destroy()
         exit()
